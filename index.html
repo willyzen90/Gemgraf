@@ -72,30 +72,7 @@
       </div>
     </div>
   </div>
-  <script src="assets/js/data.js"></script>
-
-<script>
-  // Escuchar los nodos que inyecta la extensión
-  window.addEventListener("message", (event) => {
-    if (event.data && event.data.type === "GEMINI_GRAPH_DATA") {
-      const extraNodes = event.data.nodes;
-      const extraEdges = event.data.edges;
-
-      // Si tu DataSet de vis.js ya está creado, agregamos los nodos dinámicamente
-      if (window.nodesDataSet && window.edgesDataSet) {
-        extraNodes.forEach(node => {
-          if (!window.nodesDataSet.get(node.id)) {
-            window.nodesDataSet.add(node);
-          }
-        });
-        extraEdges.forEach(edge => {
-          window.edgesDataSet.add(edge);
-        });
-      }
-    }
-  });
-</script>
-
-<script src="assets/js/graph.js"></script>
+ <script src="assets/js/data.js"></script>
+ <script src="assets/js/graph.js"></script>
 </body>
 </html>
