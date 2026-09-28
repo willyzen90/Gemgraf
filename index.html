@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini Graph View - Estilo Obsidian</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Header / Controls -->
+  <header class="navbar">
+    <div class="logo-area">
+      <svg class="icon-logo" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"></circle>
+        <circle cx="19" cy="6" r="2"></circle>
+        <circle cx="5" cy="6" r="2"></circle>
+        <circle cx="19" cy="18" r="2"></circle>
+        <circle cx="5" cy="18" r="2"></circle>
+        <line x1="12" y1="9" x2="12" y2="3"></line>
+        <line x1="10" y1="13.5" x2="6.5" y2="16.5"></line>
+        <line x1="14" y1="13.5" x2="17.5" y2="16.5"></line>
+        <line x1="10" y1="10.5" x2="6.5" y2="7.5"></line>
+        <line x1="14" y1="10.5" x2="17.5" y2="7.5"></line>
+      </svg>
+      <h2>Gemini Vault Graph</h2>
+    </div>
+    
+    <div class="stats-area">
+      <span id="node-count">0 Nodos</span>
+      <span class="divider">|</span>
+      <span id="edge-count">0 Enlaces</span>
+    </div>
+  </header>
+
+  <!-- Side Control Panel -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3>Filtros & Grafo</h3>
+    </div>
+    
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Buscar entrada o tema...">
+    </div>
+
+    <div class="filter-group">
+      <h4>Categorías</h4>
+      <label class="category-item"><input type="checkbox" class="cat-filter" value="core" checked> <span class="dot core"></span> Principal</label>
+      <label class="category-item"><input type="checkbox" class="cat-filter" value="tech" checked> <span class="dot tech"></span> Programación & Tech</label>
+      <label class="category-item"><input type="checkbox" class="cat-filter" value="science" checked> <span class="dot science"></span> Inteligencia Artificial</label>
+      <label class="category-item"><input type="checkbox" class="cat-filter" value="tools" checked> <span class="dot tools"></span> Productividad & Notas</label>
+    </div>
+
+    <div class="slider-group">
+      <h4>Fuerza de Repulsión</h4>
+      <input type="range" id="gravity-slider" min="-100" max="-10" value="-50">
+    </div>
+  </aside>
+
+  <!-- Network Canvas Container -->
+  <main id="network-container"></main>
+
+  <!-- Modal Detail Viewer -->
+  <div id="detail-modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="modal-close" class="close-btn">&times;</button>
+      <span class="modal-tag" id="modal-tag">Categoría</span>
+      <h2 id="modal-title">Título de la Entrada</h2>
+      <div id="modal-body">
+        <p>Detalles sobre esta consulta o tema explorado en Gemini...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/graph.js"></script>
+</body>
+</html>
