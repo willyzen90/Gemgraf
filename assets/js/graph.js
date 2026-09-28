@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("network-container");
 
   // DataSets
-  const nodesDataSet = new vis.DataSet(rawNodes);
-  const edgesDataSet = new vis.DataSet(rawEdges);
+  window.nodesDataSet = new vis.DataSet(rawNodes);
+  window.edgesDataSet = new vis.DataSet(rawEdges);
 
   // Actualizar contadores
   document.getElementById("node-count").innerText = `${rawNodes.length} Nodos`;
