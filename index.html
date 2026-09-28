@@ -72,46 +72,30 @@
       </div>
     </div>
   </div>
-
   <script src="assets/js/data.js"></script>
-  document.addEventListener("DOMContentLoaded", () => {
-  // 1. Detectar la memoria local de la extensión en Firefox/Chrome
-  const storageApi = (typeof browser !== "undefined" && browser.storage) 
-    ? browser.storage.local 
-    : (typeof chrome !== "undefined" && chrome.storage) 
-      ? chrome.storage.local 
-      : null;
 
-  if (storageApi) {
-    storageApi.get(["userNodes", "userEdges"], (result) => {
-      const storedNodes = result.userNodes || [];
-      const storedEdges = result.userEdges || [];
+<script>
+  // Escuchar los nodos que inyecta la extensión
+  window.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "GEMINI_GRAPH_DATA") {
+      const extraNodes = event.data.nodes;
+      const extraEdges = event.data.edges;
 
-      // 2. Unir los nodos por defecto con las consultas capturadas por la extensión
-      const finalNodes = [...rawNodes, ...storedNodes];
-      const finalEdges = [...rawEdges, ...storedEdges];
+      // Si tu DataSet de vis.js ya está creado, agregamos los nodos dinámicamente
+      if (window.nodesDataSet && window.edgesDataSet) {
+        extraNodes.forEach(node => {
+          if (!window.nodesDataSet.get(node.id)) {
+            window.nodesDataSet.add(node);
+          }
+        });
+        extraEdges.forEach(edge => {
+          window.edgesDataSet.add(edge);
+        });
+      }
+    }
+  });
+</script>
 
-      renderGraph(finalNodes, finalEdges);
-    });
-  } else {
-    // Si se abre sin extensión activa
-    renderGraph(rawNodes, rawEdges);
-  }
-});
-
-function renderGraph(nodesData, edgesData) {
-  const container = document.getElementById("network-container"); // Revisa que este ID coincida con tu HTML
-  
-  const data = {
-    nodes: new vis.DataSet(nodesData),
-    edges: new vis.DataSet(edgesData)
-  };
-
-  // Mantén las opciones de diseño que ya tienes
-  const options = { /* tus opciones actuales */ };
-
-  new vis.Network(container, data, options);
-}
-  <script src="assets/js/graph.js"></script>
+<script src="assets/js/graph.js"></script>
 </body>
 </html>
