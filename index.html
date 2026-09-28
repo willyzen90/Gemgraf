@@ -74,6 +74,44 @@
   </div>
 
   <script src="assets/js/data.js"></script>
+  document.addEventListener("DOMContentLoaded", () => {
+  // 1. Detectar la memoria local de la extensión en Firefox/Chrome
+  const storageApi = (typeof browser !== "undefined" && browser.storage) 
+    ? browser.storage.local 
+    : (typeof chrome !== "undefined" && chrome.storage) 
+      ? chrome.storage.local 
+      : null;
+
+  if (storageApi) {
+    storageApi.get(["userNodes", "userEdges"], (result) => {
+      const storedNodes = result.userNodes || [];
+      const storedEdges = result.userEdges || [];
+
+      // 2. Unir los nodos por defecto con las consultas capturadas por la extensión
+      const finalNodes = [...rawNodes, ...storedNodes];
+      const finalEdges = [...rawEdges, ...storedEdges];
+
+      renderGraph(finalNodes, finalEdges);
+    });
+  } else {
+    // Si se abre sin extensión activa
+    renderGraph(rawNodes, rawEdges);
+  }
+});
+
+function renderGraph(nodesData, edgesData) {
+  const container = document.getElementById("network-container"); // Revisa que este ID coincida con tu HTML
+  
+  const data = {
+    nodes: new vis.DataSet(nodesData),
+    edges: new vis.DataSet(edgesData)
+  };
+
+  // Mantén las opciones de diseño que ya tienes
+  const options = { /* tus opciones actuales */ };
+
+  new vis.Network(container, data, options);
+}
   <script src="assets/js/graph.js"></script>
 </body>
 </html>
